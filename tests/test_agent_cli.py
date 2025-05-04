@@ -1,0 +1,53 @@
+from typer.testing import CliRunner
+from cli.agentctl import app
+from pathlib import Path
+import json
+
+runner = CliRunner()
+DATA_DIR = Path("data")
+
+
+def test_create_and_assign():
+    agent_name = "cli_test_agent"
+    mem_path = DATA_DIR / f"{agent_name}.json"
+    if mem_path.exists():
+        mem_path.unlink()
+
+    # Agent creation
+    result_create = runner.invoke(app, ["create", agent_name, "--role", "CLI test agent"])
+    assert result_create.exit_code == 0
+    assert f"[OK] Created agent '{agent_name}'" in result_create.stdout
+
+    # Task assignment (in new runner-session)
+    result_assign = runner.invoke(app, ["assign", agent_name, "Say Hey"])
+    assert result_assign.exit_code == 0
+    assert "Agent" in result_assign.stdout
+
+    # Checking saved memory
+    assert mem_path.exists()
+    with open(mem_path) as f:
+        memory = json.load(f)
+        assert len(memory) >= 1
+        assert "task" in memory[0]
+        assert "response" in memory[0]
+
+
+def test_assign_without_create():
+    agent_name = "cli_test_no_create"
+    mem_path = DATA_DIR / f"{agent_name}.json"
+
+    # Agent was not created, simple assign - should work anyway
+    result_assign = runner.invoke(app, ["assign", agent_name, "Who are you?"])
+    assert result_assign.exit_code == 0
+    assert "Agent" in result_assign.stdout
+
+    assert mem_path.exists()
+
+
+def test_list_and_exit():
+    result = runner.invoke(app, ["list"])
+    assert result.exit_code == 0
+    assert "🐜" in result.stdout or "No agents" in result.stdout
+
+    result = runner.invoke(app, ["exit"])
+    assert result.exit_code == 0
