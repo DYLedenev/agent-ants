@@ -1,70 +1,117 @@
-agent-ants 🐜
-🌌 Swarm-based CLI AI Agents that think, log, and grow together.
+# 🐜 agent-ants
 
-✨ Описание
+_A swarm of lightweight AI agents with memory, roles, and CLI superpowers._
 
-agent-ants — это лёгкая, модульная система AI-агентов, которые:
-🧰 Получают задачи ("assign")
-🤔 Думают и формируют ответы
-📅 Хранят память о прошлых задачах
-📉 Логируют своё поведение
-👥 Живут в улье (Swarm), которым можно управлять
-⌛ Работают с локальной LLM или через API
-🚀 Быстрый старт
+---
 
-# Установка
-make install  # или pip install -e .
+## 📦 Features
 
-# Запуск CLI
+- 🧠 **Agents with memory** — every agent stores tasks and responses in `data/`.
+- 🧭 **Role-based behavior** — each agent has a personality and a system prompt.
+- 🐜 **Swarm system** — agents are registered in a central `Swarm` hive.
+- ⚡ **Fast CLI** — create, assign, log, list, and interact with agents via terminal.
+- 🪵 **Logging** — detailed logs per agent in `logs/`.
+- 🧪 **Pytest support** — 100% tested with `pytest` + `Makefile` flow.
+- ✨ **Extensible** — plug in your own agents, prompts, and LLM logic.
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Clone and install
+git clone https://github.com/yourname/agent-ants.git
+cd agent-ants
+pip install -e .
+
+# Run CLI
 python app.py
+```
 
-В CLI:
-> create analyst "Проводит анализ рисков"
-> assign analyst "Что будет с AGI в ближайшие 3 года?"
-> log analyst
-> list
-> exit
+---
 
-🎓 Структура проекта
+## 🛠 CLI Commands (REPL)
 
+```
+create <name> <role>     # Create a new agent
+assign <name> <task>     # Ask agent a question
+log <name>               # Show agent's memory
+list                     # List all agents
+exit                     # Exit the CLI
+```
+
+Example:
+```bash
+create analyst "Risk analyst"
+assign analyst "What's the risk of AGI in 3 years?"
+log analyst
+```
+
+---
+
+## 🧬 Roles & Prompts
+
+Each agent loads a system prompt from `prompts/<name>.txt`. Two examples:
+
+- `prompts/analyst.txt`: concise risk analyst
+- `prompts/researcher.txt`: fast, shallow summarizer
+
+Create your own agents by adding `.txt` files and corresponding Python logic.
+
+---
+
+## 🧪 Testing
+
+Run full test suite with:
+
+```bash
+make test-all
+```
+
+Covers:
+- 🧠 Agent thinking
+- 🗂 File system behavior
+- 🧪 CLI logic
+- 🐜 Swarm registration
+
+---
+
+## 📁 Project Structure
+
+```
 agent-ants/
-├── app.py                  # CLI REPL
-├── cli/agentctl.py         # Typer CLI
-├── agents/                 # Классы агентов (base, analyst, etc.)
-├── core/                   # LLM, логгер, таймер, swarm
-├── memory/                 # Хранилище задач и векторов
-├── prompts/                # Системные промпты для агентов
-├── data/                   # Saved memory файлов
-├── logs/                   # Логи агентов
-├── cluster/                # ClusterManager (в разработке)
-├── tools/                  # Парсеры и поиск
-├── tests/                  # Pytest тесты + фикстуры
+├── app.py                # CLI entrypoint
+├── cli/                  # CLI commands (Typer)
+├── core/                 # Swarm, LLM, logger, utils
+├── agents/               # Agent definitions
+├── prompts/              # System prompts
+├── memory/               # Save/load agent memory
+├── logs/                 # Agent logs
+├── data/                 # Agent memory store
+├── tests/                # Pytest tests
+```
 
-🔍 Примеры системных промптов (prompts/)
-  analyst.txt:
-    Ты профессиональный аналитик рисков. Отвечай лаконично, опираясь на факты. Если задача слишком общая — уточни контекст.
+---
 
-  researcher.txt:
-    Ты исследователь. Твоя задача — найти релевантную информацию, разобрать по пунктам, указать источники и сделать выводы. Излагай структурированно.
+## 🧠 Philosophy
 
-🔧 Тестирование
-make test-all  # PYTHONPATH=. pytest -v --tb=short tests/
+> "Each ant is dumb. But the swarm is smart."
 
-Покрытие включает:
-Юнит-тесты агентов (think, memory, log)
-Тесты CLI (create, assign, list, log, exit)
-Тестирование Swarm и взаимодействия
+This framework is built for **small, focused AI agents**. Instead of building one massive LLM, you orchestrate a **swarm of simple agents** — each doing one thing well.
 
-TBA: Roadmap
+---
 
+## 📜 License
 
-👋 Вклад
-Fork it, star it, hack it. Pull requests welcome — или просто заходи поболтать в REPL
+MIT — free to use, modify, share, and build on.
 
-📄 Лицензия
-MIT License
+---
 
-—
+## 🧪 Coming Soon
 
-Powered by caffeine, curiosity, and ants that dream big
+- 🕸 Agent-to-agent interaction
+- 🧵 Task chains
+- 🌐 OpenAPI-based API
+- 🔁 Autonomous loop mode
+
 (Readme is AI generated)
