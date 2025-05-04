@@ -12,7 +12,7 @@ _A swarm of lightweight AI agents with memory, roles, and CLI superpowers._
 - ⚡ **Fast CLI** — create, assign, log, list, and interact with agents via terminal.
 - 🪵 **Logging** — detailed logs per agent in `logs/`.
 - 🧪 **Pytest support** — 100% tested with `pytest` + `Makefile` flow.
-- ✨ **Extensible** — plug in your own agents, prompts, and LLM logic.
+- ✨ **Extensible** — plug in your own agents, prompts, and LLM backends (OpenAI, local, or custom).
 
 ---
 
@@ -56,7 +56,16 @@ Each agent loads a system prompt from `prompts/<name>.txt`. Two examples:
 - `prompts/analyst.txt`: concise risk analyst
 - `prompts/researcher.txt`: fast, shallow summarizer
 
+
 Create your own agents by adding `.txt` files and corresponding Python logic.
+
+You can also configure your own LLM backend by editing `core/config.py` or setting environment variables:
+
+- `LLM_API_URL`
+- `LLM_MODEL`
+- `LLM_TOKEN`
+
+This allows you to use OpenAI, local models, or even proxy setups.
 
 ---
 

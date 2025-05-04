@@ -1,3 +1,5 @@
 -e .
 typer
 requests
+dotenv
+pyyaml

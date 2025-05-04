@@ -1,9 +1,26 @@
+import os
+from dotenv import load_dotenv
 import requests
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "qwen3:8b"
+load_dotenv()
+
+LLM_API_URL = os.getenv("LLM_API_URL", "")
+MODEL_NAME = os.getenv("LLM_MODEL", "")
+LLM_TOKEN = os.getenv("LLM_TOKEN", "")
 
 def generate(prompt: str, system: str = "") -> str:
+    """Generate a response from the language model.
+    
+    Args:
+        prompt (str): The input prompt to send to the language model
+        system (str, optional): System prompt to guide the model's behavior. Defaults to "".
+        
+    Returns:
+        str: The generated response from the language model
+        
+    Raises:
+        requests.exceptions.HTTPError: If the API request fails
+    """
     payload = {
         "model": MODEL_NAME,
         "prompt": prompt,
@@ -16,6 +33,7 @@ def generate(prompt: str, system: str = "") -> str:
     if system:
         payload["system"] = system
 
-    resp = requests.post(OLLAMA_URL, json=payload)
+    headers = {"Authorization": f"Bearer {LLM_TOKEN}"} if LLM_TOKEN else {}
+    resp = requests.post(LLM_API_URL, json=payload, headers=headers)
     resp.raise_for_status()
     return resp.json()["response"].strip()

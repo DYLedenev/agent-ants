@@ -1,3 +1,4 @@
+from unittest.mock import patch
 from typer.testing import CliRunner
 from cli.agentctl import app
 from pathlib import Path
@@ -7,7 +8,8 @@ runner = CliRunner()
 DATA_DIR = Path("data")
 
 
-def test_create_and_assign():
+@patch("agents.base.generate", return_value="<think>Test</think> Final answer.")
+def test_create_and_assign(mock_generate):
     agent_name = "cli_test_agent"
     mem_path = DATA_DIR / f"{agent_name}.json"
     if mem_path.exists():
@@ -32,7 +34,8 @@ def test_create_and_assign():
         assert "response" in memory[0]
 
 
-def test_assign_without_create():
+@patch("agents.base.generate", return_value="<think>Test</think> Final answer.")
+def test_assign_without_create(mock_generate):
     agent_name = "cli_test_no_create"
     mem_path = DATA_DIR / f"{agent_name}.json"
 

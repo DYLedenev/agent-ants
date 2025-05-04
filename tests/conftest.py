@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 from agents.base import Agent
 from core.swarm import Swarm
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=".env.test", override=True)
 
 DATA_DIR = Path("data")
 

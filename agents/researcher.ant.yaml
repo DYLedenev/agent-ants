@@ -1,0 +1,6 @@
+name: researcher
+role: Data researcher focused on factual queries
+llm:
+  model: qwen:8b
+  temperature: 0.4
+  top_p: 0.9
