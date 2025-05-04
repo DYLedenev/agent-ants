@@ -1,4 +1,3 @@
-import os
 import json
 from pathlib import Path
 from agents.base import Agent
@@ -11,7 +10,7 @@ LOG_DIR = Path("logs")
 def test_agent_creates_memory_and_log(mock_generate):
     agent_name = "fs_test_agent"
 
-    # Очистка от предыдущих файлов
+    # Clean up any existing files
     mem_path = DATA_DIR / f"{agent_name}.json"
     log_path = LOG_DIR / f"{agent_name}.log"
     if mem_path.exists():
@@ -24,11 +23,11 @@ def test_agent_creates_memory_and_log(mock_generate):
     agent = Agent(name=agent_name, role="Tester of FS")
     result = agent.think("Test filesystem behavior")
 
-    # Проверка результата
+    # Check the result
     assert "internal" not in result
     assert "External visible output." in result
 
-    # Файл памяти создан
+    # Memory file created
     assert mem_path.exists()
     with open(mem_path) as f:
         mem = json.load(f)
@@ -37,7 +36,7 @@ def test_agent_creates_memory_and_log(mock_generate):
         assert "response" in mem[0]
         assert "internal" not in mem[0]["response"]
 
-    # Файл лога создан
+    # Log file created
     assert log_path.exists()
     log_content = log_path.read_text()
     assert "[THINKING]" in log_content

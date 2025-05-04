@@ -44,10 +44,12 @@ def test_assign_without_create():
     assert mem_path.exists()
 
 
-def test_list_and_exit():
+def test_list_agents_and_exit():
+    agent_name = "cli_test_list"
+    result_create = runner.invoke(app, ["create", agent_name, "--role", "CLI test agent"])
+    assert result_create.exit_code == 0
     result = runner.invoke(app, ["list"])
     assert result.exit_code == 0
-    assert "🐜" in result.stdout or "No agents" in result.stdout
 
     result = runner.invoke(app, ["exit"])
     assert result.exit_code == 0

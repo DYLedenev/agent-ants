@@ -10,4 +10,4 @@ def test_swarm_register_and_get():
 
     agent2 = swarm.get("other")
     assert agent2.name == "other"
-    assert "other" in swarm.list()
+    assert "other" in swarm.list_agents()

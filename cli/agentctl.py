@@ -1,3 +1,4 @@
+import typer
 from core.swarm import Swarm
 
 app = typer.Typer()
@@ -14,10 +15,15 @@ def assign(name: str, task: str):
     result = agent.think(task)
     typer.echo(f"\nAgent '{name}' says:\n{result}\n")
 
-@app.command()
-def list():
-    names = swarm.list()
+@app.command(name="list")
+def list_agents():
+    names = swarm.list_agents()
     if not names:
         typer.echo("[INFO] No agents registered in this session.")
     else:
         typer.echo("🐜 " + "\n🐜 ".join(names))
+
+@app.command()
+def exit():
+    typer.echo("[INFO] Exiting agentctl.")
+    raise typer.Exit()

@@ -19,5 +19,5 @@ class Swarm:
         self.agents[name] = agent
         return agent
 
-    def list(self):
+    def list_agents(self):
         return list(self.agents.keys())
