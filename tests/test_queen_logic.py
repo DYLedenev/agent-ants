@@ -48,3 +48,13 @@ def test_assign_to_generic_agent(mock_generate):
     fallback = dummy_agent("default", "generic")
     result = queen.assign_task("Tell me a joke", [fallback])
     assert result["assigned_to"] == "default"
+
+def test_split_task_returns_multiple_subtasks():
+    queen = Queen()
+    task = "Investigate the causes of AI alignment failures and propose solutions."
+    subtasks = queen.split_task(task)
+    assert isinstance(subtasks, list)
+    assert len(subtasks) >= 2
+    for sub in subtasks:
+        assert isinstance(sub, str)
+        assert len(sub) > 5  # Some minimal content

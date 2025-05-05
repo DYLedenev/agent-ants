@@ -6,5 +6,13 @@
   {
     "task": "Tell me a joke",
     "response": "Why did the scarecrow win an award?  \nBecause he was *outstanding in his field*! \ud83c\udf3e\ud83d\ude04"
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Here's a light-hearted joke for you:  \n\"Why don't skeletons fight each other? They don\u2019t have the guts!\" \ud83d\ude04  \n\nLet me know if you'd like another!"
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why did the octopus open a piano shop?  \nBecause he wanted to make a *eight* (8) note! \ud83c\udfb9\ud83d\udc19"
   }
 ]
