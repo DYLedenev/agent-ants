@@ -1,5 +1,5 @@
 run:
-	python app.py
+	python agent-app.py
 
 test-all:
 	PYTHONPATH=. pytest -v --tb=short tests/

@@ -25,7 +25,7 @@ cd agent-ants
 pip install -e .
 
 # Run CLI
-python app.py
+python agent-app.py
 ```
 
 ---
@@ -89,7 +89,7 @@ Covers:
 
 ```
 agent-ants/
-├── app.py                # CLI entrypoint
+├── agent-app.py          # CLI entrypoint
 ├── cli/                  # CLI commands (Typer)
 ├── core/                 # Swarm, LLM, logger, utils
 ├── agents/               # Agent definitions

@@ -1,6 +1,8 @@
+SPDX-License-Identifier: MIT
+
 MIT License
 
-Copyright (c) 2025 Dmitry
+Copyright (c) 2025 Dmitry Ledenev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +21,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Additional Terms:
+
+- You are free to use, modify, and distribute this software for personal or internal use.
+- Public use (such as publication on GitHub, HuggingFace, web services, etc.) must include **clear visible attribution** to the original author: Dmitry Ledenyov.
+- Any attempt to represent this software as solely your own work **without attribution** is strictly prohibited.
+- Redistribution in closed-source or commercial form requires **prior written consent** from the author.
+- Use of this Software for unethical or harmful purposes is strongly discouraged.
+- You may not use this Software or its outputs to train, fine-tune, or evaluate commercial AI models without explicit permission from the author.

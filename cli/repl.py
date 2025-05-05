@@ -115,3 +115,29 @@ class AgentShell(cmd.Cmd):
         """
         for name in agents:
             print(f"🐜 {name}")
+            
+    def help_create(self):
+        print("create <name> [--role <desc>]\n  Create a new agent. Optionally specify a role.")
+
+    def help_assign(self):
+        print("assign <name> <task>\n  Assign a task to an agent and get a response.")
+
+    def help_log(self):
+        print("log <name>\n  Show all previous tasks/responses for the agent.")
+
+    def help_list(self):
+        print("list\n  List all agents registered in the swarm.")
+
+    def help_exit(self):
+        print("exit\n  Exit the agent REPL.")
+        
+    def do_help(self, arg):
+        if arg:
+            return super().do_help(arg)
+        print("\nAvailable commands:\n")
+        print("  create <name> [--role <desc>]     Create a new agent with optional role")
+        print("  assign <name> <task>              Assign a task to the agent")
+        print("  log <name>                        Show agent's memory log")
+        print("  list                              List all available agents in the swarm")
+        print("  exit                              Exit the application")
+        print("\nType 'help <command>' for more info.")
