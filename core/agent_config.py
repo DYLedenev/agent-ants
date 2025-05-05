@@ -3,6 +3,31 @@ from pathlib import Path
 
 CONFIGS_PATH = Path(__file__).parent.parent / "agents" / "configs"
 
+
+def read_yaml(file_path: str) -> dict:
+    """Read a YAML file and return its content as a dictionary.
+    
+    This function attempts to read a YAML file from the specified path.
+    If the file doesn't exist or there's an error reading it, an empty
+    dictionary is returned.
+    
+    Args:
+        file_path (str): The path to the YAML file
+        
+    Returns:
+        dict: The content of the YAML file as a dictionary
+    """
+    try:
+        with open(file_path, "r") as f:
+            return yaml.safe_load(f) or {}
+    except FileNotFoundError:
+        print(f"[WARN] File '{file_path}' not found. Returning empty dictionary.")
+        return {}
+    except Exception as e:
+        print(f"[ERROR] Failed to read '{file_path}': {e}")
+        return {}
+
+
 def load_agent_config(name: str) -> dict:
     """Load configuration for a specific agent from a YAML file.
     
@@ -27,8 +52,7 @@ def load_agent_config(name: str) -> dict:
         return default
 
     try:
-        with open(path, "r") as f:
-            data = yaml.safe_load(f) or {}
+        data = read_yaml(path)
         return {
             "role": data.get("role", default["role"]),
             "system_prompt": data.get("system_prompt", default["system_prompt"]),

@@ -7,6 +7,7 @@ logger = get_logger("classifier")
 def classify_task(task: str, mapping: Dict[str, List[str]]) -> str:
     """
     Classify the task type using LLM based on a mapping of category -> keywords.
+    Fallback to keyword-based match if LLM fails.
 
     Args:
         task (str): The input task to classify.
@@ -16,6 +17,13 @@ def classify_task(task: str, mapping: Dict[str, List[str]]) -> str:
     Returns:
         str: The most suitable category for the task (or 'generic' if nothing matches).
     """
+    def keyword_match(task: str, mapping: Dict[str, List[str]]) -> str:
+        lowered_task = task.lower()
+        for category, keywords in mapping.items():
+            if any(keyword.lower() in lowered_task for keyword in keywords):
+                return category
+        return "generic"
+
     # Prepare the prompt
     prompt_lines = [
         "Here is a list of task categories and their associated keywords:",
@@ -33,11 +41,11 @@ Task:
     prompt = "\n".join(prompt_lines)
 
     logger.info(f"Classifying task: {task}")
-    response = generate(prompt=prompt)
-    response = response.strip().lower()
+    response = generate(prompt=prompt).strip().lower()
 
-    # Validate result
-    if response in mapping:
-        return response
-    logger.warning(f"LLM returned unknown category: {response}. Defaulting to 'generic'.")
-    return "generic"
+    match response:
+        case category if category in mapping:
+            return category
+        case _:
+            logger.warning(f"LLM returned unknown category: {response}. Using keyword fallback.")
+            return keyword_match(task, mapping)

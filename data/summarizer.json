@@ -1,0 +1,14 @@
+[
+  {
+    "task": "Summarize this long report",
+    "response": "I'd be happy to help summarize a report, but I need the actual content of the report to work with. Could you please provide the text or key sections of the report you'd like summarized?"
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I'd be happy to help summarize a report, but I currently don't have access to the content you're referring to. Please share the report text or provide specific details about its contents, and I'll create a concise summary for you."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I'd be happy to help summarize a report, but I need the actual content of the report first. Could you please share the text or provide specific details about the report you'd like summarized? If it's a lengthy document, you can either paste the text here or describe its key sections and themes so I can create a concise summary for you."
+  }
+]

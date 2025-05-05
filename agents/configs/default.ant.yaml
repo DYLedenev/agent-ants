@@ -2,6 +2,7 @@ name: agent
 description: >
   This is a default agent configuration for a generic agent.
 role: assistant
+task_type: generic
 llm:
   caste: minor
   model: qwen:8b

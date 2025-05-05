@@ -2,8 +2,8 @@ from agents.base import Agent
 
 
 def test_minor_cannot_communicate_with_queen():
-    queen = Agent(name="queen_test", role="Queen", config={"caste": "queen"})
-    minor = Agent(name="minor_test", role="Researcher", config={"caste": "minor"})
+    minor = Agent(name="minor_test", config={"llm": {"caste": "minor"}})
+    queen = Agent(name="queen_test", config={"llm": {"caste": "queen"}})
 
     assert not minor.can_communicate_with(queen)
 
@@ -29,6 +29,6 @@ def test_same_caste_communication():
 
 
 def test_unknown_caste_defaults_to_minor():
-    a = Agent(name="a", role="Whatever", config={})
-    b = Agent(name="b", role="Whatever", config={"caste": "major"})
+    a = Agent("a", config={"llm": {"caste": "unknown"}})
+    b = Agent("b", config={"llm": {"caste": "minor"}})
     assert not a.can_communicate_with(b)

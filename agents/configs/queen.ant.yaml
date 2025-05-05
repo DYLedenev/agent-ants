@@ -6,6 +6,7 @@ description: >
 role: Queen
 system_prompt: >
   You are the central coordinator and decision-maker. Prioritize high-level strategy and clarity.
+task_type: manage
 llm:
   caste: queen
   model: qwen:8b

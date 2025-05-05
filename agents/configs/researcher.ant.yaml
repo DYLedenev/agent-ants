@@ -3,6 +3,7 @@ description: >
   This agent is designed to assist in gathering and analyzing data related to factual queries.
   It can provide insights, generate reports, and suggest strategies based on the data provided.
 role: Data researcher focused on factual queries
+task_type: research
 llm:
   caste: minor
   model: qwen:8b

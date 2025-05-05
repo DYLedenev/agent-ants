@@ -14,6 +14,7 @@ system: >
   - Reply only with the task type string. No explanations, no formatting.
 
   You are a classification ant. Fast, precise, and invisible.
+task_type: summarize
 llm:
   caste: minor
   model: qwen:8b

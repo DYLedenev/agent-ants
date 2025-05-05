@@ -4,7 +4,7 @@ from core.logger import get_logger
 from core.timer import Timer
 from core.clean_output import remove_think_tags
 from prompts.prompt_loader import load_prompt
-from core.agent_config import load_agent_config
+from core.agent_config import load_agent_config, read_yaml
 from tools.classifier import classify_task
 
 from core.llm import generate
@@ -33,9 +33,10 @@ class Agent:
             Loads agent configuration, system prompt, and memory from storage.
         """
         self.name = name
+        self.system_prompt = load_prompt(name)
         config = config or load_agent_config(name)
         self.role = role or config.get("role", "assistant")
-        self.system_prompt = load_prompt(name)
+        self.task_type = config.get("task_type", "generic")
         self.llm_config = config.get("llm", {})
         self.memory = load_agent_memory(name)
         self.logger = get_logger("agent", agent_name=name)
@@ -77,31 +78,67 @@ class Agent:
         if my_caste == "major" and their_caste == "minor":
             return True  # Majors can talk to minors
         return False  # All other combinations are restricted
+    
+    def receive_task(self, task_type: str = None) -> str:
+        """
+        Agent evaluates whether it can accept the task based on task_type.
+
+        Args:
+            task (str): The task content.
+            task_type (str, optional): The type of task, used to check if the agent should handle it.
+
+        Returns:
+            str: Confirmation message or rejection.
+        """
+        expected_type = self.task_type or "generic"
+        incoming_type = task_type or expected_type
+        if incoming_type != expected_type:
+            msg = f"Rejected. I do {expected_type}, got {incoming_type}."
+            self.logger.warning(f"[REJECT] {msg}")
+            return msg
+        self.logger.info(f"[ACCEPT] Task accepted.")
+        return "Accepted"
 
 
 class Queen(Agent):
-    """The Queen agent, responsible for task orchestration and delegation."""
-    def __init__(self):
-        super().__init__(name="queen", role="queen", config={"caste": "queen"})
-        self.logger = get_logger("queen")
+    def __init__(self, name="queen", config=None):
+        super().__init__(name=name, config=config)
+        self.logger = get_logger("queen", agent_name=self.name)
 
-    def define_task_type(self, task: str, mapping: dict) -> str:
-        """Use a classifier to determine the type/category of task."""
-        return classify_task(task, mapping)
+    def define_task_type(self, task: str) -> str:
+        self.logger.info(f"[DECIDE] Analyzing task type: {task}")
+        mapping = read_yaml("core/tasks_to_agents_mapping.yaml")
+        task_type = classify_task(task, mapping)
+        self.logger.info(f"[DECIDE] Classified task as: {task_type}")
+        return task_type
 
-    def assign_task(self, task: str, mapping: dict, agents: list[Agent]) -> tuple[str, Agent]:
-        """Determine task type and assign to appropriate agent.
+    def assign_task(self, task: str, agents: list[Agent]) -> dict:
+        task_type = self.define_task_type(task)
 
-        Returns a tuple of (task_type, agent).
-        """
-        task_type = self.define_task_type(task, mapping)
+        # Finding the best agent for the task
         for agent in agents:
-            if agent.role == task_type:
-                return task_type, agent
+            if agent.task_type == task_type:
+                accepted = agent.receive_task(task_type)
+                if accepted.lower() == "accepted":
+                    response = agent.think(task)
+                    self.logger.info(f"[ASSIGN] Assigning to {agent.name}")
+                    return {
+                        "assigned_to": agent.name,
+                        "assignment": response
+                    }
+                else:
+                    self.logger.warning(f"[REJECTED] Agent {agent.name} rejected task: {accepted}")
 
-        # fallback to generic if no matching role
+        # Fallback to generic agent if no exact match found
         for agent in agents:
             if agent.role == "generic":
-                return "generic", agent
+                accepted = agent.receive_task(task_type)
+                if accepted.lower() == "accepted":
+                    self.logger.info(f"[FALLBACK] Using generic: {agent.name}")
+                    response = agent.think(task)
+                    return {"assigned_to": agent.name, "assignment": response}
+                else:
+                    self.logger.warning(f"[REJECTED] Generic agent {agent.name} rejected task: {accepted}")
 
-        raise ValueError(f"No available agent for task type: {task_type}")
+        self.logger.warning(f"[ERROR] No suitable agent found.")
+        return {"assigned_to": None, "assignment": "No suitable agent available."}
