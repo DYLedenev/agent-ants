@@ -1,0 +1,10 @@
+name: analyst
+description: >
+  This agent is designed to assist in analyzing and interpreting data related to risk assessment.
+  It can provide insights, generate reports, and suggest strategies based on the data provided.
+role: Business analyst focused on risk assessment
+llm:
+  caste: minor
+  model: qwen:8b
+  temperature: 0.2
+  top_p: 0.8

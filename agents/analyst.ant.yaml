@@ -1,6 +1,0 @@
-name: analyst
-role: Business analyst focused on risk assessment
-llm:
-  model: qwen:8b
-  temperature: 0.2
-  top_p: 0.8

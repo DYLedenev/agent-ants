@@ -124,3 +124,6 @@ MIT — free to use, modify, share, and build on.
 - 🔁 Autonomous loop mode
 
 (Readme is AI generated)
+
+Mermaid:
+https://www.mermaidchart.com/raw/358fc1a3-0a07-4657-8df8-18bc71aad2b9?theme=light&version=v0.1&format=svg
