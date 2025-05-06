@@ -1,8 +1,10 @@
 import yaml
 from pathlib import Path
+from core.logger import get_logger
+logger = get_logger("agent_config")
+
 
 CONFIGS_PATH = Path(__file__).parent.parent / "agents" / "configs"
-
 
 def read_yaml(file_path: str) -> dict:
     """Read a YAML file and return its content as a dictionary.
@@ -21,10 +23,10 @@ def read_yaml(file_path: str) -> dict:
         with open(file_path, "r") as f:
             return yaml.safe_load(f) or {}
     except FileNotFoundError:
-        print(f"[WARN] File '{file_path}' not found. Returning empty dictionary.")
+        logger.warning(f"File '{file_path}' not found. Returning empty dictionary.")
         return {}
     except Exception as e:
-        print(f"[ERROR] Failed to read '{file_path}': {e}")
+        logger.error(f"Failed to read '{file_path}': {e}")
         return {}
 
 
@@ -48,7 +50,7 @@ def load_agent_config(name: str) -> dict:
     default = load_default_config()
 
     if not path.exists():
-        print(f"[WARN] Config for agent '{name}' not found. Using default config.")
+        logger.warning(f"Config for agent '{name}' not found. Using default config.")
         return default
 
     try:
@@ -59,7 +61,7 @@ def load_agent_config(name: str) -> dict:
             "llm": data.get("llm", default["llm"]),
         }
     except Exception as e:
-        print(f"[ERROR] Failed to load config for '{name}': {e}")
+        logger.error(f"Failed to load config for '{name}': {e}")
         return default
 
 

@@ -4,8 +4,10 @@ from core.logger import get_logger
 from core.timer import Timer
 from core.clean_output import remove_think_tags
 from prompts.prompt_loader import load_prompt
-from core.agent_config import load_agent_config, read_yaml
+from core.agent_config import load_agent_config
 from tools.classifier import classify_task
+from core.task import Task, TaskMapping
+from uuid import uuid4
 
 from core.llm import generate
 from memory.memory import save_agent_memory, load_agent_memory
@@ -32,20 +34,32 @@ class Agent:
         Note:
             Loads agent configuration, system prompt, and memory from storage.
         """
+        self.id = str(uuid4())
         self.name = name
         self.system_prompt = load_prompt(name)
         config = config or load_agent_config(name)
         self.role = role or config.get("role", "assistant")
-        self.task_type = config.get("task_type", "generic")
-        self.llm_config = config.get("llm", {})
-        self.memory = load_agent_memory(name)
+        self.task_type = config.get("task_type", "generic")     # Agent's task's type which it can handle
+        self.llm_config = config.get("llm", {})     # Agent's LLM configuration representing its general settings
+        self.memory = load_agent_memory(name)   # Agent's memory
         self.logger = get_logger("agent", agent_name=name)
+        self.busy = False   # Indicates if the agent is currently processing a task
+        self.timer = None   # Timer for task processing performance measurement
+        
+    def start_timer(self) -> float:
+        """Set a timer for the agent's tasks."""
+        self.timer = Timer()
+        return self.timer.start_time
+    
+    def stop_timer(self) -> float:
+        """Stop the timer and return the elapsed time."""
+        return self.timer.elapsed()
 
-    def think(self, task: str) -> str:
+    def think(self, task_content: str) -> str:
         """Process a task and generate a response.
 
         Args:
-            task (str): The task or query to process
+            task_content (str): The task or query to process
 
         Returns:
             str: The agent's response to the task
@@ -54,17 +68,20 @@ class Agent:
             This method logs the thinking process, times the execution,
             cleans the response, saves it to memory, and returns the result.
         """
-        self.logger.info(f"[THINKING] New task: {task}")
-        t1 = Timer()
-        full_response = generate(prompt=task, system=self.system_prompt)
-        thinking_time = t1.elapsed()
-        self.logger.debug(f"[TIMER] Thought in {thinking_time:.2f}s")
+        try:
+            self.logger.info(f"[THINKING] New task: {task_content}")
+            self.busy = True
+            self.start_timer()
+            full_response = generate(prompt=task_content, system=self.system_prompt)
+            self.logger.debug(f"[TIMER] Thought in {self.stop_timer():.2f}s")
 
-        clean_response = remove_think_tags(full_response)
-        self.logger.info(f"[OK] Final response: {clean_response[:80]}...")
-        self.memory.append({"task": task, "response": clean_response})
-        save_agent_memory(self.name, self.memory)
-        return clean_response
+            clean_response = remove_think_tags(full_response)
+            self.logger.info(f"[OK] Final response: {clean_response[:80]}...")
+            self.memory.append({"task": task_content, "response": clean_response})
+            save_agent_memory(self.name, self.memory)
+            return clean_response
+        finally:
+            self.busy = False
 
     def can_communicate_with(self, other: "Agent") -> bool:
         """Determine if this agent can communicate with another agent based on caste rules."""
@@ -79,23 +96,34 @@ class Agent:
             return True  # Majors can talk to minors
         return False  # All other combinations are restricted
     
-    def receive_task(self, task_type: str = None) -> str:
-        """
-        Agent evaluates whether it can accept the task based on task_type.
-
-        Args:
-            task (str): The task content.
-            task_type (str, optional): The type of task, used to check if the agent should handle it.
-
-        Returns:
-            str: Confirmation message or rejection.
-        """
+    def _reject_unexpected_task_type(self, task_type: str) -> str:
         expected_type = self.task_type or "generic"
         incoming_type = task_type or expected_type
         if incoming_type != expected_type:
             msg = f"Rejected. I do {expected_type}, got {incoming_type}."
             self.logger.warning(f"[REJECT] {msg}")
-            return msg
+            return True
+        return False
+
+    def _reject_task_because_busy(self) -> str:
+        if self.busy:
+            msg = f"Rejected. {self.name} is currently busy."
+            self.logger.warning(f"[REJECT] {msg}")
+            return True
+        return False
+
+    def receive_task(self, task_type: str = None) -> str:
+        """
+        Agent evaluates whether it can accept the task based on task_type.
+
+        Args:
+            task_type (str, optional): The type of task, used to check if the agent should handle it.
+
+        Returns:
+            str: Confirmation message or rejection.
+        """
+        if self._reject_unexpected_task_type(task_type) or self._reject_task_because_busy():
+            return "Rejected"
         self.logger.info(f"[ACCEPT] Task accepted.")
         return "Accepted"
 
@@ -104,6 +132,7 @@ class Queen(Agent):
     """ Queen class representing the highest caste in the agent hierarchy.
     This class is responsible for task classification and delegation to other agents.
     It inherits from the base Agent class and implements specific logic for the Queen agent."""
+    
     def __init__(self, name="queen", config=None):
         """Initialize a new Queen instance. Inherits from the Agent class.
         This class is responsible for task classification and delegation to other agents.
@@ -114,12 +143,23 @@ class Queen(Agent):
         super().__init__(name=name, config=config)
         self.logger = get_logger("queen", agent_name=self.name)
 
-    def define_task_type(self, task: str) -> str:
+    def _find_generic_agent(self, agents: list[Agent], task_type: str):
+        for agent in agents:
+            if agent.role == "generic":
+                accepted = agent.receive_task(task_type)
+                if accepted.lower() == "accepted":
+                    self.logger.info(f"[FALLBACK] Using generic: {agent.name}")
+                    return agent
+                else:
+                    self.logger.warning(f"[REJECTED] Generic agent {agent.name} rejected task: {accepted}")
+        return None
+
+    def define_task_type(self, task: Task) -> str:
         """
         Determines the type of a given task by analyzing it and mapping it to a predefined classification.
 
         Args:
-            task (str): The task description to be analyzed and classified.
+            task (Task): The task description to be analyzed and classified.
 
         Returns:
             str: The classified task type based on the mapping.
@@ -129,16 +169,42 @@ class Queen(Agent):
             - Logs the resulting task type after classification.
 
         Note:
-            This method relies on an external YAML file ("core/tasks_to_agents_mapping.yaml") 
-            for task-to-agent type mappings and a helper function `classify_task` for classification logic.
+            This method relies on the TaskMapping class for task-to-agent type mappings and a helper function `classify_task` for classification logic.
         """
-        self.logger.info(f"[DECIDE] Analyzing task type: {task}")
-        mapping = read_yaml("core/tasks_to_agents_mapping.yaml")
-        task_type = classify_task(task, mapping)
-        self.logger.info(f"[DECIDE] Classified task as: {task_type}")
-        return task_type
+        self.logger.info(f"[DECIDE] Analyzing task type: {task.content}")
+        mapping = TaskMapping().mapping
+        task.type = classify_task(task, mapping)
+        self.logger.info(f"[DECIDE] Classified task as: {task.type}")
+        return task.type
 
-    def assign_task(self, task: str, agents: list[Agent]) -> dict:
+    def assign_task_to_agent(self, agent: Agent, task: Task) -> dict:
+        """
+        Assigns a task to a specific agent if the agent is available and can handle the task type.
+        Args:
+            agent (Agent): The agent to whom the task is being assigned.
+            task (Task): The task to be assigned.
+        Returns:
+            dict: A dictionary containing the agent's name and the response from the agent.
+        """
+        if agent.busy:
+            self.logger.warning(f"[BUSY] Agent {agent.name} is busy.")
+            return {"executor": None, "assignment": "Agent is busy."}
+        self.logger.info(f"[ASSIGN] Trying to assign task to {agent.name}")
+        if agent.task_type == task.type:
+            accepted = agent.receive_task(task.type)
+            if accepted.lower() == "accepted":
+                task.assigned_to = agent
+                response = agent.think(task.content)
+                self.logger.info(f"[ASSIGN] Assigning to {agent.name}")
+                self.logger.debug(f"[ASSIGN] {agent.id} response: {response[:80]}...")
+                return {
+                    "executor": agent,
+                    "assignment": response
+                }
+            else:
+                self.logger.warning(f"[REJECTED] Agent {agent.name} rejected task: {accepted}")
+
+    def assign_task(self, task: Task, agents: list[Agent]) -> dict:
         """
         Assigns a task to the most suitable agent from a list of agents.
 
@@ -148,47 +214,32 @@ class Queen(Agent):
         response indicating failure is returned.
 
         Args:
-            task (str): The task to be assigned.
+            task (Task): The task to be assigned.
             agents (list[Agent]): A list of Agent objects available for task assignment.
 
         Returns:
             dict: A dictionary containing:
-                - "assigned_to" (str or None): The name of the agent the task was assigned to, 
+                - "executor" (Agent or None): The name of the agent the task was assigned to, 
                   or None if no suitable agent was found.
                 - "assignment" (str): The response from the agent or an error message if no 
                   agent was available.
         """
-        task_type = self.define_task_type(task)
-
         # Finding the best agent for the task
         for agent in agents:
-            if agent.task_type == task_type:
-                accepted = agent.receive_task(task_type)
-                if accepted.lower() == "accepted":
-                    response = agent.think(task)
-                    self.logger.info(f"[ASSIGN] Assigning to {agent.name}")
-                    return {
-                        "assigned_to": agent.name,
-                        "assignment": response
-                    }
-                else:
-                    self.logger.warning(f"[REJECTED] Agent {agent.name} rejected task: {accepted}")
+            assignment_result = self.assign_task_to_agent(agent, task)
+            if assignment_result and assignment_result["executor"]:
+                return assignment_result
 
         # Fallback to generic agent if no exact match found
-        for agent in agents:
-            if agent.role == "generic":
-                accepted = agent.receive_task(task_type)
-                if accepted.lower() == "accepted":
-                    self.logger.info(f"[FALLBACK] Using generic: {agent.name}")
-                    response = agent.think(task)
-                    return {"assigned_to": agent.name, "assignment": response}
-                else:
-                    self.logger.warning(f"[REJECTED] Generic agent {agent.name} rejected task: {accepted}")
+        generic_agent = self._find_generic_agent(agents, task.type)
+        if generic_agent:
+            response = generic_agent.think(task.content)
+            return {"executor": generic_agent, "assignment": response}
 
         self.logger.warning(f"[ERROR] No suitable agent found.")
-        return {"assigned_to": None, "assignment": "No suitable agent available."}
+        return {"executor": None, "assignment": "No suitable agent available."}
     
-    def split_task(self, task: str) -> list[str]:
+    def split_task(self, task: Task) -> list[Task]:
         """
         Splits a given task into a list of clear and actionable subtasks.
 
@@ -200,15 +251,52 @@ class Queen(Agent):
             task (str): The main task to be split into subtasks.
 
         Returns:
-            list[str]: A list of subtasks derived from the main task.
+            list[Task]: A list of subtasks derived from the main task.
         """
-        self.logger.info(f"[PLAN] Splitting task: {task}")
+        self.logger.info(f"[PLAN] Splitting task: {task.content}")
         prompt = (
             "Split the following task into clear and actionable subtasks. "
             "Use 1 line per subtask. Don't include any explanations.\n"
-            f"Task: {task}"
+            f"Task: {task.content}"
         )
         response = generate(prompt=prompt, system="You are a tactical planner. No fluff, just subtasks.")
-        subtasks = [line.strip() for line in response.splitlines() if line.strip()]
-        self.logger.info(f"[PLAN] Subtasks: {subtasks}")
+        subtasks = [Task(content=line.strip()) for line in response.splitlines() if line.strip()]
+        self.logger.info(f"[PLAN] Subtasks: {[subtask.content for subtask in subtasks]}")
         return subtasks
+
+    def orchestrate(self, task: Task, agents: list[Agent]) -> dict:
+        """
+        Orchestrate execution of a large task by dividing it and delegating.
+
+        Args:
+            task (Task): The main task to process.
+            agents (list[Agent]): Available agents.
+
+        Returns:
+            dict: A mapping of subtask to result or failure reason.
+        """
+        self.logger.info(f"[EXECUTE] Received high-level task: {task.content}")
+        subtasks = self.split_task(task)
+        results = {}
+
+        for subtask in subtasks:
+            subtask.type = self.define_task_type(subtask)
+
+            # Try to find matching agent
+            assigned = False
+            result = self.assign_task(subtask, agents)
+            if result["executor"]:
+                results[subtask] = result["assignment"]
+                assigned = True
+
+            if not assigned:
+                generic_agent = self._find_generic_agent(agents, subtask.type)
+                if generic_agent:
+                    result = generic_agent.think(subtask.content)
+                    results[subtask] = result
+                    assigned = True
+
+            if not assigned:
+                results[subtask] = "[ERROR] No suitable agent found."
+
+        return results

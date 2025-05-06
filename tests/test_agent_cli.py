@@ -1,8 +1,10 @@
-from unittest.mock import patch
-from typer.testing import CliRunner
 from cli.agentctl import app
-from pathlib import Path
+from core.task import Task
 import json
+from pathlib import Path
+from typer.testing import CliRunner
+from unittest.mock import patch
+
 
 runner = CliRunner()
 DATA_DIR = Path("data")
@@ -21,7 +23,8 @@ def test_create_and_assign(mock_generate):
     assert f"[OK] Created agent '{agent_name}'" in result_create.stdout
 
     # Task assignment (in new runner-session)
-    result_assign = runner.invoke(app, ["assign", agent_name, "Say Hey"])
+    task_str = "Who are you?"
+    result_assign = runner.invoke(app, ["assign", agent_name, task_str])
     assert result_assign.exit_code == 0
     assert "Agent" in result_assign.stdout
 
@@ -40,7 +43,8 @@ def test_assign_without_create(mock_generate):
     mem_path = DATA_DIR / f"{agent_name}.json"
 
     # Agent was not created, simple assign - should work anyway
-    result_assign = runner.invoke(app, ["assign", agent_name, "Who are you?"])
+    task_str = "Who are you?"
+    result_assign = runner.invoke(app, ["assign", agent_name, task_str])
     assert result_assign.exit_code == 0
     assert "Agent" in result_assign.stdout
 

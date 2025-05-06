@@ -18,5 +18,21 @@
   {
     "task": "Summarize this long report",
     "response": "Please provide the report or specify which part you'd like summarized, and I\u2019ll gladly help!"
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I'd be happy to help summarize a report, but I currently don't have access to the content of the report you're referring to. Could you please share the text or key points of the report you'd like summarized? Once you provide that, I'll create a concise summary for you."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "To summarize a long report, I need the specific content or key points of the report you're referring to. Could you provide the text, highlights, or details of the report you'd like summarized? Without additional context, I can't generate an accurate summary."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I\u2019d be happy to help summarize a report, but I need the content of the report itself or specific details about it. Could you share the text, key points, or provide a link to the report? This will allow me to create an accurate and concise summary for you."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "Please provide the content of the report you'd like summarized, and I'll create a concise summary for you."
   }
 ]

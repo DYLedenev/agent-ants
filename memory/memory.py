@@ -44,6 +44,7 @@ def load_agent_memory(name):
     Returns:
         list: The agent's memory data
     """
+    logger.debug(f"[>] Loading memory for agent '{name}'")
     return _load_memory(name, MEMORY_DIR / f"{name}.json")
 
 def save_agent_memory(name, memory):
