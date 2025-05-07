@@ -38,7 +38,7 @@ class AgentShell(cmd.Cmd):
         task = Task(content=arg)
         results = queen.orchestrate(task, list(agents.values()))
         for t, res in results.items():
-            logger.info(f"[+] {t.content}\n -> {res}")
+            logger.info(f"[+] {t}\n -> {res}")
             
     def do_create(self, arg):
         """Create a new agent with a specified name and role.
@@ -84,11 +84,12 @@ class AgentShell(cmd.Cmd):
             print("[!] Use: assign <str: name> <str: do something>")
             return
         name = args[0]
-        task = " ".join(args[1:])
+        request = " ".join(args[1:])
         agent = agents.get(name)
         if not agent:
             logger.error(f"Agent '{name}' not found")
             return
+        task = Task(content=request)
         response = agent.think(task)
         logger.info(f"Agent '{name}' replied with:\n{response}")
 

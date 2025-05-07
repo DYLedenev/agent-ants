@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from agents.base import Agent
 from unittest.mock import patch
+from core.task import Task
 
 DATA_DIR = Path("data")
 LOG_DIR = Path("logs")
@@ -21,7 +22,8 @@ def test_agent_creates_memory_and_log(mock_generate):
     mock_generate.return_value = "<think>internal</think> External visible output."
 
     agent = Agent(name=agent_name, role="Tester of FS")
-    result = agent.think("Test filesystem behavior")
+    task = Task(content="Test filesystem behavior")
+    result = agent.think(task)
 
     # Check the result
     assert "internal" not in result

@@ -30,7 +30,7 @@ def test_assign_task_to_researcher(mock_generate):
     task.type = task_type
     result = queen.assign_task(task, [researcher])
     assert result["executor"].name == "researcher"
-    assert "AGI" in result["assignment"]
+    assert "AGI" in result["output"]
 
 @patch("tools.classifier.generate", return_value="summarize")
 def test_assign_task_to_summarizer(mock_generate):
@@ -50,7 +50,7 @@ def test_assign_returns_none_if_no_match(mock_generate):
     task = Task(content="Translate into Spanish", task_type="unknown")
     result = queen.assign_task(task, agents)
     assert result["executor"] is None
-    assert "no suitable" in result["assignment"].lower()
+    assert "no suitable" in result["output"].lower()
 
 @patch("tools.classifier.generate", return_value="generic")
 def test_assign_to_generic_agent(mock_generate):
@@ -63,7 +63,7 @@ def test_assign_to_generic_agent(mock_generate):
 def test_split_task_returns_multiple_subtasks():
     queen = Queen()
     task = Task(content="Investigate the causes of AI alignment failures and propose solutions.")
-    subtasks = queen.split_task(task)
+    subtasks = queen.split_task(task, 2)
     assert isinstance(subtasks, list)
     assert len(subtasks) >= 2
     for sub in subtasks:

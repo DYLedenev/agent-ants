@@ -1,6 +1,6 @@
 import typer
-from core.swarm import Swarm
 from core.task import Task
+from core.swarm import Swarm
 
 app = typer.Typer()
 swarm = Swarm()
@@ -14,7 +14,7 @@ def create(name: str, role: str = "assistant"):
 def assign(name: str, request: str):
     agent = swarm.get(name)
     task = Task(content=request)
-    result = agent.think(task.content)
+    result = agent.think(task)
     typer.echo(f"\nAgent '{name}' says:\n{result}\n")
 
 @app.command(name="list")

@@ -29,7 +29,7 @@ def test_queen_assigns_using_mocked_agents(sample_task):
 
     # Assert
     assert result["executor"] == mock_agent
-    assert result["assignment"] == "Here's the AGI summary."
+    assert result["output"] == "Here's the AGI summary."
 
 
 def test_queen_fallbacks_to_generic_if_no_exact_match(sample_task):
@@ -57,4 +57,4 @@ def test_queen_fallbacks_to_generic_if_no_exact_match(sample_task):
 
     # Assert
     assert result["executor"] == generic_agent
-    assert result["assignment"] == "Generic fallback answer."
+    assert result["output"] == "Generic fallback answer."

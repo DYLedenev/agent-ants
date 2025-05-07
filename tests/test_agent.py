@@ -4,7 +4,7 @@ from core.task import Task
 def test_agent_think():
     agent = Agent(name="test")
     task = Task(content="What is AGI?")
-    result = agent.think(task.content)
+    result = agent.think(task)
     assert isinstance(result, str)
     assert len(result) > 0
 

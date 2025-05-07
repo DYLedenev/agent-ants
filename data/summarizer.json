@@ -34,5 +34,53 @@
   {
     "task": "Summarize this long report",
     "response": "Please provide the content of the report you'd like summarized, and I'll create a concise summary for you."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "The report highlights [key finding] as the most critical takeaway, emphasizing [main recommendation] to address [primary issue]."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "The report is missing, please provide it for a summary."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I can't summarize a report without the actual content. Please provide the text or key points you'd like summarized, and I'll do it quickly!"
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "The report highlights key findings, trends, and recommendations from extensive analysis, concluding with actionable insights for decision-making."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I can't summarize without the report content. Please provide the text."
+  },
+  {
+    "task": "Summarize this long report",
+    "response": "I can't summarize without the report content. Please provide the text."
+  },
+  {
+    "task": "Okay, the user wants to split the task into three subtasks. Let me start by understanding the main task. The task is to plan and summarize a mini research report on AI in healthcare, then extract key risks and suggest mitigations.",
+    "response": "Plan the report structure, summarize key findings, and analyze risks with mitigation strategies."
+  },
+  {
+    "task": "<think>",
+    "response": "I'm here. How can I help?"
+  },
+  {
+    "task": "Okay, the user wants me to split the task into three clear subtasks. Let me start by understanding the main task: plan and summarize a mini research report on AI in healthcare, then extract key risks and suggest mitigations.",
+    "response": "1. Outline the report structure and gather key AI healthcare data. 2. Summarize findings into concise sections. 3. Identify critical risks and propose targeted mitigation strategies."
+  },
+  {
+    "task": "<think>",
+    "response": "I'm here. How can I help?"
+  },
+  {
+    "task": "Summarize key points and trends in AI healthcare.",
+    "response": "AI healthcare leverages machine learning for diagnostics, personalized treatment, drug discovery, and predictive analytics, driven by trends like data integration, ethical AI, and regulatory advancements."
+  },
+  {
+    "task": "Okay, the user wants me to split the task into three clear subtasks. Let me start by understanding the main task: Plan and summarize a mini research report on AI in healthcare, then extract key risks and suggest mitigations.",
+    "response": "1. Plan the report by outlining scope, sources, and structure.  \n2. Summarize key findings and applications of AI in healthcare.  \n3. Identify risks (e.g., bias, privacy) and propose mitigation strategies."
   }
 ]

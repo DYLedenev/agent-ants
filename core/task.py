@@ -16,14 +16,26 @@ class TaskStatus(Enum):
     REJECTED = "rejected"
 
 
+class TaskDifficulty(Enum):
+    EASY = """Think hyper-quickly. 
+              You are a minimal-response micro-agent. 
+              Answer in one short sentence.
+              Reason fast. Think quicker. 
+              No formatting. Be fast. Be blunt. Be helpful."""
+    MEDIUM = "Think ultra-quickly."
+    HARD = "Think mega-quickly."
+    EXPERT = "Think very-quickly and thoroughly like an expert."
+
+
 class Task:
-    def __init__(self, content: str, task_type: str = "generic"):
-        self.id = str(uuid4())
-        self.content = content
-        self.type = task_type
+    def __init__(self, content: str, task_type: str = "generic", difficulty: str = TaskDifficulty.EASY.name.lower()):
         self.assigned_to = None
+        self.content = content
+        self.difficulty = difficulty
+        self.id = str(uuid4())
         self.result = None
         self.status = TaskStatus.PENDING
+        self.type = task_type
 
     def assign_to(self, agent_name: str):
         self.assigned_to = agent_name

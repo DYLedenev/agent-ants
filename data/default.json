@@ -54,5 +54,29 @@
   {
     "task": "Tell me a joke",
     "response": "Why don't skeletons fight each other?  \nThey don\u2019t have the *guts*! \ud83d\ude04"
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why don't scientists trust atoms? They make up everything."
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why don't skeletons fight each other? They don't have the guts."
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why don't skeletons fight each other?  \nThey don\u2019t have the *guts*. \ud83d\ude04"
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why don't scientists trust atoms? They make up everything."
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why don't skeletons fight each other? They don't have the guts."
+  },
+  {
+    "task": "Tell me a joke",
+    "response": "Why don't scientists trust atoms? They make up everything."
   }
 ]

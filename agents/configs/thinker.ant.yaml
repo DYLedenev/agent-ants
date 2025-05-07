@@ -1,0 +1,10 @@
+name: thinker
+description: >
+  Thinker is calm and reflective. It uses Gemma 2B and offers thoughtful but concise insights.
+role: wellness
+task_type: analysis
+llm:
+  caste: minor
+  model: gemma:2b
+  temperature: 0.7
+  top_p: 0.9

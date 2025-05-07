@@ -58,5 +58,37 @@
   {
     "task": "Consume the pineapple by eating the flesh.",
     "response": "To consume pineapple by eating its flesh, follow these steps for a safe and enjoyable experience:\n\n### 1. **Prepare the Pineapple**  \n   - **Peel the Skin**: Use a sharp knife or pineapple peeler to remove the spiky outer skin. Cut around the fruit, following the natural curve of the skin.  \n   - **Remove the Core**: After peeling, the core (fibrous, central part) is still attached. Use the knife to slice around the core and remove it, or simply eat around it.  \n\n### 2. **Cut into Manageable Pieces**  \n   - **Slicing**: Cut the peeled pineapple into rounds or slices (about 1/4-inch thick). For even pieces, use a mandoline or pineapple slicer.  \n   - **Cubing**: Alternatively, dice the flesh into cubes for snacks or recipes.  \n\n### 3. **Enjoy the Flesh**  \n   - **Eat Directly**: Savor the sweet, tangy flesh fresh. If you notice a tingling or burning sensation in your mouth (from **bromelain**, an enzyme in pineapple), rinse your mouth with water or eat a small amount of bread to neutralize it.  \n   - **Use in Recipes**: Incorporate the flesh into fruit salads, smoothies, grilled dishes, or tropical cocktails.  \n\n### 4. **Tips & Warnings**  \n   - **Avoid the Skin**: The outer layer is tough and inedible.  \n   - **Bromelain Alert**: Some people may experience mild irritation from bromelain. If you\u2019re sensitive, limit consumption or cook the pineapple (heat deactivates the enzyme).  \n   - **Storage**: Store leftover pineapple in an airtight container in the fridge for up to 3\u20134 days.  \n\nEnjoy your tropical treat! \ud83c\udf4d\u2728"
+  },
+  {
+    "task": "<think>",
+    "response": "I'm here to help. What's on your mind?"
+  },
+  {
+    "task": "Okay, the user wants me to split the task \"How to eat a pineapple?\" into clear, actionable subtasks. Let me think about the steps involved in eating a pineapple.",
+    "response": "1. Wash the pineapple. 2. Remove the skin and eyes. 3. Cut into slices or chunks. 4. Eat directly or use in recipes."
+  },
+  {
+    "task": "</think>",
+    "response": "Always prioritize safety and practicality in daily decisions."
+  },
+  {
+    "task": "- Obtain a ripe pineapple.",
+    "response": "Check for a sweet aroma near the base, yellow skin with a slight brown tint, and a firm yet slightly yielding texture when pressed."
+  },
+  {
+    "task": "- Cut off the leaves and crown.",
+    "response": "Trim the leaves and crown to encourage growth and maintain the plant's health."
+  },
+  {
+    "task": "- Slice the pineapple into pieces.",
+    "response": "Use a knife to slice the pineapple into pieces, holding it steady to avoid slipping."
+  },
+  {
+    "task": "- Remove the core and stringy parts.",
+    "response": "Use a knife to slice off the core and peel away the stringy parts."
+  },
+  {
+    "task": "<think>",
+    "response": "I'm here. How can I help?"
   }
 ]

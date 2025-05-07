@@ -23,3 +23,10 @@ def load_prompt(agent_name: str) -> str:
 def load_default_prompt() -> str:
     """Load the default system prompt."""
     return DEFAULT_PROMPT_FILE.read_text(encoding="utf-8")
+
+def read_prompt_file(name: str) -> str:
+    """Read a prompt file and return its content."""
+    file_path = PROMPT_DIR / f"{name}.txt"
+    if file_path.exists():
+        return file_path.read_text(encoding="utf-8")
+    raise FileNotFoundError(f"Prompt file {file_path} does not exist.")

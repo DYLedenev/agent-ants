@@ -1,0 +1,11 @@
+name: strategist
+description: >
+  Strategist is a planning and logic-focused agent powered by Mistral.
+  It handles multi-step reasoning and breakdowns well.
+role: technical-explainer
+task_type: explain
+llm:
+  caste: major
+  model: mistral
+  temperature: 0.6
+  top_p: 0.95
