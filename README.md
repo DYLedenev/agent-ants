@@ -1,260 +1,237 @@
 # 🐜 agent-ants
 
-_A swarm of lightweight AI agents with memory, roles, and CLI superpowers._
+> _Individually limited. Collectively unstoppable._
+
+A lightweight, modular **AI orchestration framework** where each agent is tiny-small, focused, and dumbie alone — but all of them are brilliant as a swarm.
+
+Inspired by ant colonies, brain cognition and collective intelligence. Built for next-gen automation.
+
+---
+
+⚠️ **Alpha stage** — expect breaking changes. This is an evolving ecosystem.
+
+---
+
+## 🚀 Why agent-ants?
+
+Instead of trying to make one giant LLM solve everything, you spawn a **swarm of tiny, specialized agents**, each with its own memory, personality, and role. Together, they:
+
+- **Delegate, think, collaborate**
+- **Remember past tasks**
+- **Split work like a boss**
+
+Like distributed intelligence in a hive-mind.
 
 ---
 
 ## 📦 Features
 
-- 🧠 **Agents with memory** — every agent stores tasks and responses in `data/`.
-- 🧭 **Role-based behavior** — each agent has a personality and a system prompt.
-- 🐜 **Swarm system** — agents are registered in a central `Swarm` hive.
-- ⚡ **Fast CLI** — create, assign, log, list, and interact with agents via terminal.
-- 🪵 **Logging** — detailed logs per agent in `logs/`.
-- 🧪 **Pytest support** — 100% tested with `pytest` + `Makefile` flow.
-- ✨ **Extensible** — plug in your own agents, prompts, and LLM backends (OpenAI, local, or custom).
+- 🧠 **Agents with memory** — tasks & replies saved in `data/`
+- 🎭 **Role-based agents** — `analyst`, `researcher`, `scribe`, `guardian`, `queen`, etc.
+- 🐜 **Swarm core** — central registry for agents
+- ⚡ **Intuitive CLI** — run everything via REPL shell
+- 🪵 **Per-agent logs** — stored neatly in `logs/`
+- 🔌 **LLM backend agnostic** — works with OpenAI, Ollama, Mistral, etc.
+- 🔁 **Automatic task orchestration** — delegate tasks, split them, spawn temp agents
+- 🧬 **Caste system** — just like ants, with Queen → Major → Minor agents
+- 🧪 **100% Pytest coverage** — and a sexy `Makefile` to run it all
 
 ---
 
-## 🚀 Quick Start
+## 🧠 Idea
 
-```bash
-# Clone and install
-git clone https://github.com/yourname/agent-ants.git
-cd agent-ants
-pip install -e .
-
-# Run CLI
-python agent-app.py
-```
-
----
-
-## 🛠 CLI Commands (REPL)
-
-```
-create <name> <role>     # Create a new agent
-assign <name> <task>     # Ask agent a question
-log <name>               # Show agent's memory
-list                     # List all agents
-exit                     # Exit the CLI
-```
-
-Example:
-```bash
-create analyst "Risk analyst"
-assign analyst "What's the risk of AGI in 3 years?"
-log analyst
-```
-
----
-
-## 🧬 Roles & Prompts
-
-Each agent loads a system prompt from `prompts/<name>.txt`. Two examples:
-
-- `prompts/analyst.txt`: concise risk analyst
-- `prompts/researcher.txt`: fast, shallow summarizer
+Agent Ants is built on the idea that **intelligence is modular**. Just like a brain, where different regions handle different tasks, Agent Ants uses a **caste system** to manage agents.
+Each agent is a **specialist** in its own right, but together they form a **cohesive unit** that can tackle complex problems.
+This is not just a collection of agents; it's a **swarm**. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal.
+This is **cooperative intelligence** at its finest.
+The goal is to create a system that can **think, learn, and adapt** like a human brain, but with the speed and efficiency of a computer.
+The **caste system** is inspired by the way ants work together in a colony. Each caste has its own role, but they all work together to achieve a common goal. This is the essence of **swarm intelligence**.
+The **Queen** is the orchestrator, the **Majors** are the domain experts, and the **Minors** are the workers. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal.
+The **Scribe** is the summarizer, the **Soldier** is the watchdog, and the **Larva** is the temporary agent. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal.
 
 
-Create your own agents by adding `.txt` files and corresponding Python logic.
+### Agent Ants is a framework for **cooperative intelligence** — where each agent:
 
-You can also configure your own LLM backend by editing `core/config.py` or setting environment variables:
+- Knows its purpose
+- Operates independently
+- Reports back to the swarm
+- Collaborates seamlessly
+- Learns from its experiences
+- Adapts to new tasks
+- Grows in complexity over time
+- Evolves with the swarm
+- Is part of a larger system
+- Is a tiny piece of a larger puzzle
 
-- `LLM_API_URL`
-- `LLM_MODEL`
-- `LLM_TOKEN`
-
-This allows you to use OpenAI, local models, or even proxy setups.
+**Inspired by:**
+- 🐜 Natural swarm intelligence
+- 🧠 Cortical modularity
+- ⚙️ Unix philosophy (do one thing well)
+- 🐝 Ant colonies (caste system, division of labor)
+- 🧬 Modular programming
 
 ---
 
-## 🧪 Testing
+## 📷 Architecture
 
-Run full test suite with:
+User Input
+    ↓
+[ Queen ] — splits task
+    ↓
+[ Majors ] — domain managers
+    ↓
+[ Minors ] — do the actual work
+    ↓
+[ Scribe ] — formats final output
 
-```bash
-make test-all
-```
-
-Covers:
-- 🧠 Agent thinking
-- 🗂 File system behavior
-- 🧪 CLI logic
-- 🐜 Swarm registration
-
----
-
-## 📁 Project Structure
-
-```
-agent-ants/
-├── agent-app.py          # CLI entrypoint
-├── cli/                  # CLI commands (Typer)
-├── core/                 # Swarm, LLM, logger, utils
-├── agents/               # Agent definitions
-├── prompts/              # System prompts
-├── memory/               # Save/load agent memory
-├── logs/                 # Agent logs
-├── data/                 # Agent memory store
-├── tests/                # Pytest tests
-```
+Agents communicate, log memory, and use LLMs to think — all orchestrated by the `Swarm`.
 
 ---
 
-## 🧠 Philosophy
+## 🧪 Quick Start
 
-> "Each ant is dumb. But the swarm is smart."
-
-This framework is built for **small, focused AI agents**. Instead of building one massive LLM, you orchestrate a **swarm of simple agents** — each doing one thing well.
-
----
-
-## 📜 License
-
-MIT — free to use, modify, share, and build on.
-
----
-
-## 🧪 Coming Soon
-
-- 🕸 Agent-to-agent interaction
-- 🧵 Task chains
-- 🌐 OpenAPI-based API
-- 🔁 Autonomous loop mode
-
-(Readme is AI generated)
-
-----
-# 🐜 Agent Ants
-
-Agent Ants is a lightweight, modular swarm-agent framework designed to orchestrate specialized AI agents in a collaborative setting. Inspired by nature and high-performing AI patterns, this tool lets you simulate intelligent task delegation, communication, and collective reasoning.
-
-> ⚠️ Project is in early-stage development. Things will change rapidly.
-
----
-
-## 🔧 Getting Started
-
-### 1. Clone the repo
 ```bash
 git clone https://github.com/DYLedenev/agent-ants.git
 cd agent-ants
-```
+pip install -e .
 
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-```
+# Install and run Ollama:
 
-### 3. Install [Ollama](https://ollama.com/download)
-
-Make sure it's running:
-```bash
 ollama serve
-```
-
-### 4. Pull models (recommended lightweight ones):
-```bash
 ollama pull tinyllama
-ollama pull gemma:2b
-ollama pull mistral
-```
 
-> You can adjust which model each agent uses by editing its config in `configs/agents/*.yaml`
+# Run CLI shell:
 
----
-
-## 🧠 Capabilities
-
-- ✅ REPL shell to create agents and talk to them interactively
-- ✅ Role-based delegation via a "Queen" agent
-- ✅ Automatic task splitting & subtask assignment
-- ✅ Agent caste system (Queen / Major / Minor)
-- ✅ Memory logging per agent
-- ✅ LLM-based task type classification
-- ✅ Difficulty-aware prompt tweaking
-- ✅ Spawning temporary agents if needed
-- ✅ Executive summary of orchestrated work
-
----
-
-## 🐚 CLI / REPL Usage
-
-Start the shell:
-```bash
 python app.py
+
+# Try commands like:
+
+create bob analyst
+# Ask a single agent to do something:
+assign bob "How risky is AGI in 5 years?"
+log bob
+
+queen
+# Ask the Queen some big question:
+orchestrate "How do we terraform Mars?"
+```
+⸻
+## 🐚 CLI Commands
+
+```bash
+help
+
+# Command	Description
+create <name> <role>	Spawn a new agent
+assign <name> <task>	Assign task to agent
+log <name>	View agent’s memory
+list	List all agents
+queen	Create a Queen agent
+orchestrate <task>	Let Queen split and delegate
+exit	Quit shell
 ```
 
-Try commands like:
-```shell
-create alice analyst         # creates agent 'alice' with analyst role
-assign alice "What's AGI?"   # assigns a task to alice
-queen                        # creates a queen agent
-orchestrate "How to eat pineapple?"   # queen splits & delegates task
+⸻
+## 📁 Project Structure
+
+```bash
+agent-ants/
+├── app.py                 # Main REPL shell
+├── agents/                # Agent logic (base, queen, roles)
+├── cli/                   # REPL command handlers
+├── core/                  # Swarm, LLM adapter, utils
+├── configs/agents/        # YAML configs per agent
+├── prompts/               # Role prompts for agents
+├── memory/                # Saved thoughts per agent
+├── logs/                  # Agent logs
+├── tests/                 # Pytest suite
+├── Makefile               # Test runner
 ```
 
-More commands:
-```
-list                 - show registered agents
-list_roles           - show available roles from config
-log <name>           - show agent's memory
-exit                 - quit shell
-```
+⸻
 
----
+## 🧬 Roles & Castes
+
+|| Caste	|| Role ||	Behavior ||
+|👑 Queen	|Manager	|Splits & delegates tasks |
+|🧠 Major	|Domain lead	|Manages a domain or role |
+|🛠 Minor	|Worker	|Executes tasks, stores memory |
+|🧾 Scribe	|Summarizer	|Writes output |
+|👮 Soldier	|Watchdog	|Monitors health, logs |
+|🐣 Larva	|Temporary	|Created on the fly |
+
+
+⸻
 
 ## 🧪 Testing
 
-Run all tests:
 ```bash
+# Run all tests:
 make test-all
-```
 
-To test orchestration with mocked LLM:
-```bash
+# Or manually:
+pytest -v
+
+# Mocked LLM orchestration:
 pytest -v tests/test_orchestrate_mocked.py
 ```
 
----
+⸻
 
-## 📁 Structure
+## 🛠 Customization
 
-| Path                   | Purpose |
-|------------------------|---------|
-| `agents/base.py`       | Core Agent / Queen classes
-| `cli/repl.py`          | REPL shell
-| `core/llm.py`          | LLM abstraction
-| `core/task.py`         | Task objects, status, difficulty
-| `tools/classifier.py`  | Task type classifier
-| `configs/agents/*.yaml`| Agent config files
-| `prompts/*.txt`        | System prompt files
-| `memory/`              | Per-agent logs
-| `tests/`               | Test suite
+Edit core/config.py or use ENV vars:
+	•	LLM_API_URL
+	•	LLM_MODEL
+	•	LLM_TOKEN
 
----
+You can use:
+	•	OpenAI
+	•	Ollama
+	•	LM Studio
+	•	Custom LLM
+
+⸻
+
+## 🔮 Roadmap
+	•	Agent-to-agent communication
+	•	Concurrency & pooling
+	•	GUI dashboard
+	•	Containerized agents (Docker, k8s)
+	•	Autonomous agent loops
+    •	Agent marketplace
+    •	Agent performance metrics
+    •	Agent memory optimization
+
+⸻
 
 ## 🤝 Contributing
 
-PRs welcome — especially improvements to agent intelligence, concurrency, CLI UX, or prompt engineering.
+PRs welcome — especially around:
+	•	🧠 New agent roles
+	•	🧪 Better tests
+	•	⚙️ Concurrency
+	•	✨ Prompt engineering
+    •	🧬 Agent-to-agent comms
 
----
+⸻
 
-## 🧠 Philosophy
+## 📜 License
 
-I aim to simulate distributed intelligence using cooperative agents that:
-- Specialize in narrow tasks
-- Collaborate on large goals
-- Learn via memory and feedback
+MIT — see LICENSE file for details.
+This project is open-source and free to use, but please give credit where it's due.
+Feel free to fork, modify, and share, but do not use it for malicious purposes.
+This project is provided "as-is" without any warranties or guarantees.
+Use at your own risk.
+This project is not affiliated with any specific LLM provider or technology.
+**This project is a work in progress and may change over time.**
 
-Inspired by ant colonies, cortical modules, and swarm systems.
+⸻
 
----
+## 🌐 Links
+	•	GitHub: jamessyjay/agent-ants
+	•	Ollama: ollama.com
+	•	Project status: **Alpha** - _work in progress_
+    •	License: MIT
 
-## 🔮 Roadmap
-- [ ] Better concurrency & agent pooling
-- [ ] Containerized agents for real isolation
-- [ ] GUI dashboard
-- [ ] Multilingual & tool-using agents
-
----
+⸻
