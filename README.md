@@ -152,13 +152,14 @@ agent-ants/
 
 ## 🧬 Roles & Castes
 
-|| Caste	|| Role ||	Behavior ||
-|👑 Queen	|Manager	|Splits & delegates tasks |
-|🧠 Major	|Domain lead	|Manages a domain or role |
-|🛠 Minor	|Worker	|Executes tasks, stores memory |
-|🧾 Scribe	|Summarizer	|Writes output |
-|👮 Soldier	|Watchdog	|Monitors health, logs |
-|🐣 Larva	|Temporary	|Created on the fly |
+| Caste	| Role | Behavior |
+| :---	| :---:	| :---	|
+|👑 Queen | Manager	| Splits & delegates tasks |
+|🧠 Major | Domain lead	| Manages a domain or role |
+|🛠 Minor | Worker	| Executes tasks, stores memory |
+|🧾 Scribe | Summarizer	| Writes output |
+|👮 Soldier | Watchdog	| Monitors health, logs |
+|🐣 Larva | Temporary	| Created on the fly |
 
 
 ⸻
