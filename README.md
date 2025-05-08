@@ -75,13 +75,13 @@ The **Scribe** is the summarizer, the **Soldier** is the watchdog, and the **Lar
 ## 📷 Architecture
 
 User Input
-    ↓
+↓
 [ Queen ] — splits task
-    ↓
+↓
 [ Majors ] — domain managers
-    ↓
+↓
 [ Minors ] — do the actual work
-    ↓
+↓
 [ Scribe ] — formats final output
 
 Agents communicate, log memory, and use LLMs to think — all orchestrated by the `Swarm`.
@@ -181,15 +181,15 @@ pytest -v tests/test_orchestrate_mocked.py
 ## 🛠 Customization
 
 Edit core/config.py or use ENV vars:
-	•	LLM_API_URL
-	•	LLM_MODEL
-	•	LLM_TOKEN
+•  LLM_API_URL
+•  LLM_MODEL
+•  LLM_TOKEN
 
 You can use:
-	•	OpenAI
-	•	Ollama
-	•	LM Studio
-	•	Custom LLM
+•  OpenAI
+•  Ollama
+•  LM Studio
+•  Custom LLM
 
 ⸻
 
@@ -208,11 +208,11 @@ You can use:
 ## 🤝 Contributing
 
 PRs welcome — especially around:
-	•	🧠 New agent roles
-	•	🧪 Better tests
-	•	⚙️ Concurrency
-	•	✨ Prompt engineering
-    •	🧬 Agent-to-agent comms
+•  🧠 New agent roles
+•  🧪 Better tests
+•  ⚙️ Concurrency
+•  ✨ Prompt engineering
+•  🧬 Agent-to-agent comms
 
 ⸻
 
@@ -229,9 +229,9 @@ This project is not affiliated with any specific LLM provider or technology.
 ⸻
 
 ## 🌐 Links
-	•	GitHub: jamessyjay/agent-ants
-	•	Ollama: ollama.com
-	•	Project status: **Alpha** - _work in progress_
-    •	License: MIT
+•  GitHub: jamessyjay/agent-ants
+•  Ollama: ollama.com
+•  Project status: **Alpha** - _work in progress_
+•  License: MIT
 
 ⸻
