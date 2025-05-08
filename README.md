@@ -74,15 +74,15 @@ The **Scribe** is the summarizer, the **Soldier** is the watchdog, and the **Lar
 
 ## 📷 Architecture
 
-User Input
-↓
-[ Queen ] — splits task
-↓
-[ Majors ] — domain managers
-↓
-[ Minors ] — do the actual work
-↓
-[ Scribe ] — formats final output
+User Input <br/>
+↓ <br/>
+[ Queen ] — splits task <br/>
+↓ <br/>
+[ Majors ] — domain managers <br/>
+↓ <br/>
+[ Minors ] — do the actual work <br/>
+↓ <br/>
+[ Scribe ] — formats final output <br/>
 
 Agents communicate, log memory, and use LLMs to think — all orchestrated by the `Swarm`.
 
@@ -208,7 +208,7 @@ You can use:
 
 ## 🤝 Contributing
 
-PRs welcome — especially around:
+PRs welcome — especially around: <br/>
 •  🧠 New agent roles <br/>
 •  🧪 Better tests <br/>
 •  ⚙️ Concurrency <br/>
@@ -236,3 +236,5 @@ This project is not affiliated with any specific LLM provider or technology.
 •  License: MIT
 
 ⸻
+## 🐜 Author
+- @jamessyjay - Creator, maintainer
