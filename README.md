@@ -209,11 +209,11 @@ You can use:
 ## 🤝 Contributing
 
 PRs welcome — especially around:
-•  🧠 New agent roles
-•  🧪 Better tests
-•  ⚙️ Concurrency
-•  ✨ Prompt engineering
-•  🧬 Agent-to-agent comms
+•  🧠 New agent roles <br/>
+•  🧪 Better tests <br/>
+•  ⚙️ Concurrency <br/>
+•  ✨ Prompt engineering <br/>
+•  🧬 Agent-to-agent comms <br/>
 
 ⸻
 
