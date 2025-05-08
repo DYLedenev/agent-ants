@@ -40,14 +40,15 @@ Like distributed intelligence in a hive-mind.
 
 ## 🧠 Idea
 
-Agent Ants is built on the idea that **intelligence is modular**. Just like a brain, where different regions handle different tasks, Agent Ants uses a **caste system** to manage agents.
-Each agent is a **specialist** in its own right, but together they form a **cohesive unit** that can tackle complex problems.
-This is not just a collection of agents; it's a **swarm**. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal.
-This is **cooperative intelligence** at its finest.
-The goal is to create a system that can **think, learn, and adapt** like a human brain, but with the speed and efficiency of a computer.
-The **caste system** is inspired by the way ants work together in a colony. Each caste has its own role, but they all work together to achieve a common goal. This is the essence of **swarm intelligence**.
-The **Queen** is the orchestrator, the **Majors** are the domain experts, and the **Minors** are the workers. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal.
-The **Scribe** is the summarizer, the **Soldier** is the watchdog, and the **Larva** is the temporary agent. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal.
+Agent Ants is built on the idea that **intelligence is modular**. Just like a brain, where different regions handle different tasks, Agent Ants uses a **caste system** to manage agents. </br>
+Each agent is a **specialist** in its own right, but together they form a **cohesive unit** that can tackle complex problems. </br> 
+This is not just a collection of agents; it's a **swarm**. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal. </br>
+This is **cooperative intelligence** at its finest. </br>
+The goal is to create a system that can **think, learn, and adapt** like a human brain, but with the speed and efficiency of a computer. </br>
+The **caste system** is inspired by the way ants work together in a colony. Each caste has its own role, but they all work together to achieve a common goal. This is the essence of **swarm intelligence**. </br>
+
+The **Queen** is the orchestrator, the **Majors** are the domain experts, and the **Minors** are the workers. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal. </br>
+The **Scribe** is the summarizer, the **Soldier** is the watchdog, and the **Larva** is the temporary agent. Each agent has its own memory, personality, and role, but they all work together to achieve a common goal. </br>
 
 
 ### Agent Ants is a framework for **cooperative intelligence** — where each agent:
@@ -74,15 +75,19 @@ The **Scribe** is the summarizer, the **Soldier** is the watchdog, and the **Lar
 
 ## 📷 Architecture
 
-User Input <br/>
-↓ <br/>
-[ Queen ] — splits task <br/>
-↓ <br/>
-[ Majors ] — domain managers <br/>
-↓ <br/>
-[ Minors ] — do the actual work <br/>
-↓ <br/>
-[ Scribe ] — formats final output <br/>
+_User Input_ <br/>
+    ↓ <br/>
+[ _Queen_ ] — splits task <br/>
+    ↓ <br/>
+[ _Majors_ ] — domain managers <br/>
+    ↓ <br/>
+[ _Minors_ ] — do the actual work <br/>
+    ↓ <br/>
+[ _Scribe_ ] — formats final output <br/>
+    ↓ <br/>
+[ _Soldier_ ] — monitors health, logs <br/>
+    ↓ <br/>
+[ _Larva_ ] — temporary agents for ad-hoc tasks <br/>
 
 Agents communicate, log memory, and use LLMs to think — all orchestrated by the `Swarm`.
 
